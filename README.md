@@ -9,21 +9,21 @@ Um dashboard completo para monitoramento de dados meteorológicos em tempo real,
 
 ## 📋 Índice
 
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Funcionalidades](#funcionalidades)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação e Execução](#instalação-e-execução)
-  - [Docker (Recomendado)](#docker-recomendado)
-  - [Execução Local](#execução-local)
-- [Endpoints da API](#endpoints-da-api)
-- [Estrutura do Projeto](#estrutura-do-projeto)
-- [Sensores Monitorados](#sensores-monitorados)
-- [Uso do Dashboard](#uso-do-dashboard)
-- [Deploy no Railway](#deploy-no-railway)
-- [Solução de Problemas](#solução-de-problemas)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
+- Sobre o Projeto
+- Funcionalidades
+- Tecnologias Utilizadas
+- Pré-requisitos
+- Instalação e Execução
+  - Docker (Recomendado)
+  - Execução Local
+- Endpoints da API
+- Estrutura do Projeto
+- Sensores Monitorados
+- Uso do Dashboard
+- Deploy no Railway
+- Solução de Problemas
+- Contribuição
+- Licença
 
 ## 📖 Sobre o Projeto
 

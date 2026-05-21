@@ -7,6 +7,7 @@ function createGaugeContainer(topic) {
   gaugeContainer.appendChild(gauge);
   return gauge.id;
 }
+
 function createGauge(topic, lastReading, maxValue, minValue, containerId) {
   const unit = units[topic] || "";
   Highcharts.chart(containerId, {
@@ -87,6 +88,7 @@ function createGauge(topic, lastReading, maxValue, minValue, containerId) {
     ],
   });
 }
+
 async function processDataAndCreateGauges(session) {
   try {
     const topics = await getTopics(session);

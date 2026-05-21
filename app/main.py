@@ -8,6 +8,7 @@ Endpoints (100% compatible with the legacy PHP API):
   POST /ingest                            → manual sensor push
   GET  /sessions                          → list all sessions
   POST /sessions/{session_id}             → create a new session
+  GET  /                                  → dashboard (dataViewer.html)
   GET  /docs                              → auto-generated Swagger UI
 """
 
@@ -15,9 +16,12 @@ import asyncio
 import asyncpg
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone, timedelta
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from app.database import init_db, DATABASE_URL
 from app.models import SessionResponse, TopicResponse, Reading, IngestPayload, TOPICS
@@ -122,6 +126,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ── Static files and dashboard ───────────────────────────────────────────────
+
+# Serve static assets
+if Path("src").exists():
+    app.mount("/src", StaticFiles(directory="src"), name="src")
+
+if Path("js").exists():
+    app.mount("/js", StaticFiles(directory="js"), name="js")
+
+# Serve the dashboard
+@app.get("/")
+@app.get("/dashboard")
+async def serve_dashboard():
+    """Serve the main dashboard (dataViewer.html)"""
+    if Path("dataViewer.html").exists():
+        return FileResponse("dataViewer.html")
+    raise HTTPException(404, "Dashboard file not found. Make sure dataViewer.html exists in the root directory.")
+
+# ── Health check ──────────────────────────────────────────────────────────────
+
+@app.get("/health", include_in_schema=False)
+async def health():
+    return {"status": "ok"}
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -230,8 +257,3 @@ async def create_session(session_id: str):
             raise HTTPException(409, f"Session '{session_id}' already exists")
         await conn.execute("INSERT INTO sessions (id) VALUES ($1)", session_id)
     return {"success": True, "session_id": session_id}
-
-
-@app.get("/health", include_in_schema=False)
-async def health():
-    return {"status": "ok"}

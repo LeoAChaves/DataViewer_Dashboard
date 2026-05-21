@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: weather-postgres
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: weatherdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - weather-network
+    restart: unless-stopped
+
+  api:
+    build: .
+    container_name: weather-api
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/weatherdb
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - weather-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  weather-network:
+    driver: bridge

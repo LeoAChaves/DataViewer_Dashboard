@@ -7,10 +7,10 @@ function getSessionFromURL() {
   return null;
 }
 let urlSession = getSessionFromURL();
+
 async function checkSessionIsValid(session) {
   try {
-    const response = await fetch();
-    // To be defined
+    const response = await fetch(`/session/${session}`);
     if (!response.ok) {
       throw new Error("Session validation failed due to server response.");
     }
@@ -24,6 +24,7 @@ async function checkSessionIsValid(session) {
     return false;
   }
 }
+
 function displaySessionError(session, error) {
   var sessionError = document.querySelector("#sessionError");
   var p = document.createElement("p");
@@ -55,21 +56,21 @@ const units = {
   Pluviometro: "[ mm ]",
   CO2: "[ ppm ]",
 };
+
 async function getTopics(session) {
-  const response = await fetch();
-  // To be defined
+  const response = await fetch(`/session/${session}`);
   const data = await response.json();
   let topics = data.result;
   return topics;
 }
+
 async function getData(session, topic) {
-  const response =
-    await fetch();
-    // To be defined
+  const response = await fetch(`/data/${session}/${topic}?limit=50000`);
   const data = await response.json();
   let topicData = data.result;
   return topicData;
 }
+
 function normalizeData(data, topic) {
   const calculateMedian = (values) => {
     const sortedValues = [...values].sort((a, b) => a - b);
@@ -123,6 +124,7 @@ function normalizeData(data, topic) {
 
   return result.sort((a, b) => a.timestamp - b.timestamp);
 }
+
 function formatTimestamp(unixTimestamp) {
   const date = new Date(unixTimestamp);
   const day = date.getDate().toString().padStart(2, "0");
@@ -133,6 +135,7 @@ function formatTimestamp(unixTimestamp) {
 
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
+
 function mergeDataByTimestamp(...topicDataArrays) {
   const result = {};
 
@@ -160,6 +163,7 @@ function mergeDataByTimestamp(...topicDataArrays) {
 
   return sortedResults;
 }
+
 async function processTopicData(session) {
   try {
     const topics = await getTopics(session);

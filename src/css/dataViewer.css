@@ -1,0 +1,27 @@
+body {
+  background-color: #2b2b2b; /* Dark background */
+  color: #e0e0e3; /* Light text */
+  font-family: Arial, sans-serif;
+}
+.displayNone {
+  display: none;
+}
+.bold {
+  font-weight: bold;
+}
+.italic {
+  font-style: italic;
+}
+.center {
+  text-align: center;
+}
+#sessionError {
+  height: 100px;
+  width: 100%;
+  background-color: rgb(1, 17, 48);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 5px 5px 5px rgba(0, 0, 0, 0.8);
+}

@@ -1,0 +1,47 @@
+#data-table,
+#charts-container {
+  margin: 20px;
+}
+
+#data-table tbody tr:hover {
+  background-color: aquamarine;
+}
+#data-table tbody tr.highlight {
+  background-color: aquamarine; /* Or any color you prefer */
+}
+
+#data-table tbody td:hover {
+  background-color: rgba(0, 0, 255, 0.548);
+}
+#data-table tbody td.highlight {
+  background-color: rgba(0, 0, 255, 0.548);
+}
+
+#download-table {
+  margin-left: 20px;
+}
+
+table {
+  width: calc(100% - 40px);
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #000000;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #dadada;
+  text-align: center;
+  color: black;
+}
+tr {
+  background-color: #f2f2f2;
+}
+td {
+  text-align: center;
+  color: black;
+}

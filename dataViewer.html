@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DataViewer - Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <link rel="stylesheet" type="text/css" href="./src/css/dataViewer.css" />
+    <link rel="stylesheet" href="./src/css/gaugeConfig.css" />
+    <link rel="stylesheet" href="./src/css/syncedTableLine.css" />
+  </head>
+  <body>
+    <div id="divError" class="displayNone">
+      <div id="sessionError"></div>
+    </div>
+    <div id="gauge-container"></div>
+    <div id="charts-container"></div>
+    <table id="data-table">
+      <thead>
+        <tr id="table-header"></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button id="download-table" class="displayNone">Download Table Data</button>
+    <script src="./src/js/dataViewer.js"></script>
+    <script src="./src/js/gaugeConfig.js"></script>
+    <script src="./src/js/syncedTableLine.js"></script>
+  </body>
+</html>

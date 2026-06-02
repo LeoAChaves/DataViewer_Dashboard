@@ -148,7 +148,12 @@ async def serve_dashboard():
 
 @app.get("/health", include_in_schema=False)
 async def health():
-    return {"status": "ok"}
+    try:
+        async with _pool.acquire() as conn:
+            await conn.execute("SELECT 1")
+        return {"status": "healthy", "database": "connected"}
+    except Exception as e:
+        return {"status": "unhealthy", "database": "disconnected", "error": str(e)}
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 

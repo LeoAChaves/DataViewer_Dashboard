@@ -4,8 +4,15 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Highcharts](https://img.shields.io/badge/Highcharts-0081B4?style=for-the-badge&logo=highcharts&logoColor=white)](https://www.highcharts.com/)
+[![Deployed on Railway](https://img.shields.io/badge/Railway-Deployed-0B0D0E?style=for-the-badge&logo=railway&logoColor=white)](https://dataviewerdashboard-production.up.railway.app/?session=demo)
 
 Um dashboard completo para monitoramento de dados meteorológicos em tempo real, com visualizações interativas, armazenamento em banco de dados e simulação automática de sensores.
+
+## 🚀 Demo ao vivo
+
+**Acesse o dashboard em produção:** [https://dataviewerdashboard-production.up.railway.app/?session=demo](https://dataviewerdashboard-production.up.railway.app/?session=demo)
+
+> ⚠️ **Nota:** O Railway free tier coloca o app para dormir após 15 minutos sem uso. O primeiro acesso pode levar alguns segundos para reativar.
 
 ## 📋 Índice
 
@@ -177,22 +184,14 @@ http://localhost:8000/?session=demo
 ### Exemplos de Uso da API
 
 ```bash
-# Listar sessões
-curl http://localhost:8000/sessions
+# Listar sessões (produção)
+curl https://dataviewerdashboard-production.up.railway.app/sessions
 
 # Criar nova sessão
-curl -X POST http://localhost:8000/sessions/minha_estacao
-
-# Ver tópicos disponíveis
-curl http://localhost:8000/session/demo
+curl -X POST https://dataviewerdashboard-production.up.railway.app/sessions/minha_estacao
 
 # Obter dados de temperatura
-curl "http://localhost:8000/data/demo/Temperatura?limit=10"
-
-# Inserir dado manualmente
-curl -X POST http://localhost:8000/ingest \
-  -H "Content-Type: application/json" \
-  -d '{"session_id":"demo","topic":"Temperatura","value":23.5}'
+curl "https://dataviewerdashboard-production.up.railway.app/data/demo/Temperatura?limit=10"
 ```
 
 ## 📁 Estrutura do Projeto
@@ -262,39 +261,41 @@ weather-dashboard/
 
 ## ☁️ Deploy no Railway
 
-1. **Conecte seu repositório ao Railway:**
-   - Acesse [railway.app](https://railway.app)
-   - Clique em "New Project" → "Deploy from GitHub repo"
+### 🌍 Produção
 
-2. **Adicione um banco de dados PostgreSQL:**
-   - Clique em "Create" → "Database" → "PostgreSQL"
+**Acesse o dashboard em produção:**
 
-3. **Configure as variáveis de ambiente:**
-   - Railway fornecerá automaticamente `DATABASE_URL`
+👉 **[https://dataviewerdashboard-production.up.railway.app/?session=demo](https://dataviewerdashboard-production.up.railway.app/?session=demo)**
 
-4. **Deploy automático:**
-   - O Railway detectará o `Dockerfile` automaticamente
-   - O projeto será construído e implantado
+### Configuração necessária no Railway
 
-5. **Acesse sua aplicação:**
-   - URL será fornecida pelo Railway (ex: `https://weather-dashboard.up.railway.app/?session=demo`)
+Para evitar erros de conexão, configure:
+
+| Configuração              | Valor                             |
+| ------------------------- | --------------------------------- |
+| **Porta**                 | `8000`                            |
+| **Variável DATABASE_URL** | Referenciar ao serviço PostgreSQL |
+| **Health check endpoint** | `/health`                         |
 
 ## 🔧 Solução de Problemas
 
 ### Problema: "Session not found"
 
 ```bash
-# Criar sessão manualmente
+# Criar sessão manualmente (local)
 curl -X POST http://localhost:8000/sessions/demo
+
+# Ou em produção
+curl -X POST https://dataviewerdashboard-production.up.railway.app/sessions/demo
 ```
 
 ### Problema: Sem dados no dashboard
 
 ```bash
-# Verificar se backfill foi executado
+# Verificar se backfill foi executado (local)
 docker-compose logs api | grep backfill
 
-# Forçar novo backfill
+# Forçar novo backfill (local)
 docker exec weather-api python -c "
 import asyncio
 from app.main import _backfill
@@ -342,11 +343,13 @@ Ctrl + F5
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está sob a licença MIT.
 
-## 👥 Autores
+## 👥 Autor
 
-- **Leonardo Chaves** - _Desenvolvimento Inicial_ - [SeuGitHub](https://github.com/LeoAChaves)
+**Leonardo Chaves**
+
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/leo-a-chaves/)
 
 ## 🙏 Agradecimentos
 
@@ -359,6 +362,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
 ![Version](https://img.shields.io/badge/Version-2.0.0-blue)
+![Deployment](https://img.shields.io/badge/Deployment-Railway-0B0D0E)
 
 ---
 
@@ -366,4 +370,4 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 📧 **Contato**: chaves.leonardoalmeida@gmail.com
 
-🐛 **Reportar Bug**: [Issues](https://github.com/seuusuario/weather-dashboard/issues)
+🐛 **Reportar Bug**: [Issues](https://github.com/LeoAChaves/DataViewer_Dashboard/issues)

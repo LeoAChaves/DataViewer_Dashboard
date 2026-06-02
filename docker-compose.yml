@@ -5,6 +5,7 @@ services:
     image: postgres:15
     container_name: weather-postgres
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: weatherdb
     ports:
@@ -14,6 +15,12 @@ services:
     networks:
       - weather-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d weatherdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   api:
     build: .
@@ -23,7 +30,8 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy # ⚠️ CRÍTICO: aguarda o banco ficar saudável
     networks:
       - weather-network
     restart: unless-stopped
